@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <title>Data</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <style>
+    
+        table, td, th{
+            border-collapse: collapse;
+            border: black solid 1px;
+            padding: 20px 20px
+        }
+    </style>
+</head>
+
+<body ng-controller="cont">
+    
+    <table>
+        <thead>
+            <th>Room</th>
+            <th>Value 1</th>
+            <th>Value 2</th>
+            <th>Value 3</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="val in data">
+                <td ng-bind="val.room"></td>
+                <td ng-bind="val.val1"></td>
+                <td ng-bind="val.val2"></td>
+                <td ng-bind="val.val3"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+        angular.module('app', [])
+        .controller('cont', ["$scope", "$http", ($scope, $http)=>{
+           
+            $scope.loadData = ()=>{
+                
+                $http.post('/')
+                .then((resp)=>{
+                    $scope.data = resp.data;
+                })
+                .catch((err)=>{
+                    console.err(err);
+                })
+            
+            }
+            
+            $scope.loadData();
+            
+            window.setInterval($scope.loadData(), 5000);
+            
+            
+        }])
+    </script>
+</body>
+
+</html>
