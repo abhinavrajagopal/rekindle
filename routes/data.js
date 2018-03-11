@@ -10,7 +10,10 @@ router.route("/")
         value3 : req.query.value2,
     }).save()
     .then(()=>res.send("OK"))
-    .catch(next);
+    .catch((err)=>{
+        console.log(err);
+        console.log("REQ ", req)
+    });
 
 })
 
