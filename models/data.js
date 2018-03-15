@@ -7,8 +7,6 @@ var temp = mongoose.Schema({
     value1 : { type : String, required : true, default : "0" },
     value2 : { type : String, required : true, default : "0" },
     value3 : { type : String, required : true, default : "0" },
-},{
-    _id : false
 })
 
 module.exports = mongoose.model('data', temp);
