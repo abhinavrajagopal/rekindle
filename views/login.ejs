@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css" integrity="sha256-/mC8AIsSmTcTtaf8vgnfbZXZLYhJCd0b9If/M0Y5nDw=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js" integrity="sha256-FMQoXFhCWeNb139Wa9Z2I0UjqDeKKDYY+6PLkWv4qco=" crossorigin="anonymous"></script>
+    <style media="screen">
+        .grid{
+            height: 100%;
+        }
+        #content{
+            margin: auto!important;
+            width: 35%!important;
+        }
+        #pageHeading{
+            font-size: 4em;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui middle aligned center aligned grid">
+
+        <div class="sixteen wide column">
+
+            <div id="pageHeading" class="ui huge header center aligned">Rekindle Automations</div>
+
+        </div>
+
+
+        <div class="column" id="content">
+
+            <form class="ui form" method="POST">
+                <div class="ui stacked segment">
+                    <br><br>
+                    <div class="inline fields">
+                        <label>Username</label>
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="username">
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="inline fields">
+                        <label>Password</label>
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <br><br>
+                    <button type="submit" class="ui fluid large teal submit button">Login</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</body>
+</html>

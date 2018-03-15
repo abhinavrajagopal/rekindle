@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css" integrity="sha256-/mC8AIsSmTcTtaf8vgnfbZXZLYhJCd0b9If/M0Y5nDw=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js" integrity="sha256-FMQoXFhCWeNb139Wa9Z2I0UjqDeKKDYY+6PLkWv4qco=" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" integrity="sha256-zBy1l2WBAh2vPF8rnjFMUXujsfkKjya0Jy5j6yKj0+Q=" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            onload = ()=>{
+
+                $('.ui.accordion').accordion();
+
+                $('.progress').progress();
+
+                $('#deviceList').accordion('open', 0);
+
+            }
+        </script>
+        <style media="screen">
+            .card{
+                height : 30vh;
+            }
+            #deviceData{
+                width: auto!important;
+            }
+            #pageHeading{
+                font-size: 4em;
+            }
+            .cardHeading{
+                font-size: 2.5em!important;
+            }
+            .card{
+                text-align: center;
+            }
+            .progress{
+                margin: 0 10px!important;
+            }
+        </style>
+    </head>
+    <body ng-controller="dashboardController">
+
+        <div class="ui  container">
+            <a class="ui right floated button red" href="/logout">Logout</a>
+
+            <div id="pageHeading" class="ui huge header center aligned">Rekindle Automations</div>
+
+            <br><br>
+        </div>
+
+        <div class="ui grid">
+            <div class="four wide column">
+                <div class="ui styled accordion" id="deviceList">
+                    <div class="title">
+                        <h2><i class="dropdown icon"></i>Device List</h2>
+                    </div>
+                    <div class="content">
+
+                        <table class="ui celled padded table">
+                            <thead>
+                                <tr>
+                                    <th>DeviceID</th>
+                                    <th>Show</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="id in devices">
+                                    <td ng-bind="id"></td>
+                                    <td>
+                                        <button class="ui button blue" type="button" ng-click="showData(id)">Show Data</button>
+                                    </td>
+                                <tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="one wide column"></div>
+            <div class="ten wide column">
+
+
+            <div class="ui two stackable cards">
+                <div class="centered card">
+                    <div class="ui large header cardHeading">Room No.</div><br><br>
+                    <h1 ng-bind="device.data.room || device.data.id"></h1>
+                </div>
+                <div class="centered card">
+                    <div class="ui large header cardHeading">Percentage</div><br><br>
+                    <div class="ui indicating progress" data-percent="{{device.data.value1}}">
+                        <div class="bar"></div>
+                        <div class="label" ng-bind=" device.data.value1 + '%' "></div>
+                    </div>
+                </div>
+                <div class="centered card">
+                    <div class="ui large header cardHeading">No. of drops</div><br><br>
+                    <h1 ng-bind="device.data.value2"></h1>
+                </div>
+                <div class="centered card">
+                    <div class="ui large header cardHeading">Status</div><br>
+                    <h1 ng-bind="device.data.value3"></h1>
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            angular.module('app', [])
+            .controller('dashboardController', ["$scope", "$http", "$interval", ($scope, $http, $interval)=>{
+
+                $scope.deviceList = [];
+                $scope.device = {
+                    data : {
+                        room : "Select Room first",
+                        value1 : 0,
+                        value1 : 0,
+                        value1 : 0
+                    }
+                };
+
+                $scope.fetchDevices = ()=>{
+                    $http.post('/dashboard')
+                    .then((resp)=>{
+                        console.log("devices - ", resp.data)
+                        $scope.devices = resp.data;
+                    })
+                    .catch((err)=>{
+                        toastr.error("Something went wrong", "Make sure you have stable internet connection");
+                        console.error("fetchDevices - ", err);
+                    })
+                }
+
+                function fetchData(){
+
+                    console.log($scope.device.id)
+
+                    if(!$scope.device.id)  return;
+
+                    var request = {
+                        method : "POST",
+                        url : '/dashboard',
+                        data : { id : $scope.device.id }
+                    }
+
+                    $http(request)
+                    .then((resp)=>{
+                        $scope.device.data = resp.data;
+
+                        var percent = resp.data.value1 > 100 ? 100 : resp.data.value1;
+
+                        $('.progress').progress({   percent: percent })
+                    })
+                    .catch((err)=>{
+                        toastr.error("Something went wrong", "Make sure you have stable internet connection");
+                        console.error("fetchData - ", err);
+                    });
+
+                }
+
+                $scope.showData = (id)=>{
+                    $scope.device.id = id;
+                    $("#deviceList").accordion('close', 0)
+                    $("#deviceData").accordion('open', 0)
+
+                    fetchData();
+                }
+
+                $scope.fetchDevices();
+
+                $interval(fetchData, 10000);
+
+            }])
+
+        </script>
+    </body>
+</html>
