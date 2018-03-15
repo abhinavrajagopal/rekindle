@@ -3,8 +3,9 @@ var router = require('express').Router(),
 
 router.route("/")
 .get((req, res, next)=>{
-    
+
     new dataModel({
+        id : req.query.coreid,
         value1 : req.query.value,
         value2 : req.query.value1,
         value3 : req.query.value2,
