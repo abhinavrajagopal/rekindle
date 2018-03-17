@@ -67,7 +67,7 @@
         </div>
 
         <div class="ui grid">
-            <div class="four wide column">
+            <div class="four wide column" ng-show="showDevices">
                 <div class="ui styled accordion" id="deviceList">
                     <div class="title">
                         <h2><i class="dropdown icon"></i>Device List</h2>
@@ -94,8 +94,8 @@
                     </div>
                 </div>
             </div>
-            <div class="one wide column"></div>
-            <div class="ten wide column">
+            <div ng-class="{'one wide column' : showDevices, 'two wide column' : !showDevices}"></div>
+            <div ng-class="{'ten wide column' : showDevices, 'twelve wide column' : !showDevices}">
 
 
             <div class="ui two stackable cards">
@@ -132,6 +132,7 @@
             angular.module('app', [])
             .controller('dashboardController', ["$scope", "$http", "$interval", ($scope, $http, $interval)=>{
 
+                $scope.showDevices = <%= showDevices %>;
                 $scope.deviceList = [];
                 $scope.device = {
                     data : {
@@ -147,6 +148,8 @@
                     .then((resp)=>{
                         console.log("devices - ", resp.data)
                         $scope.devices = resp.data;
+                        if(!$scope.showDevices)
+                            $scope.showData($scope.devices[0]);
                     })
                     .catch((err)=>{
                         toastr.error("Something went wrong", "Make sure you have stable internet connection");

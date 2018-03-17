@@ -6,7 +6,7 @@ router.route("/")
 
     if(!req.user)   return res.redirect('/login');
 
-    res.render('dashboard');
+    res.render('dashboard', { showDevices : (req.user.role === "admin") });
 })
 .post((req, res, next)=>{
 
