@@ -25,13 +25,14 @@
         </script>
         <style media="screen">
             .card{
-                height : 30vh;
+                height : 25vh;
             }
             #deviceData{
                 width: auto!important;
             }
             #pageHeading{
                 font-size: 4em;
+                margin: 5px 0 0 0;
             }
             .cardHeading{
                 font-size: 2.5em!important;
@@ -42,14 +43,25 @@
             .progress{
                 margin: 0 10px!important;
             }
+            footer{
+                position: absolute!important;
+                bottom : 0;
+                width: 100%;
+            }
+            body{
+                overflow-y: hidden;
+            }
         </style>
     </head>
     <body ng-controller="dashboardController">
 
-        <div class="ui  container">
+        <div class="ui container-fluid" style="margin: 5px 0 0 0;">
             <a class="ui right floated button red" href="/logout">Logout</a>
 
-            <div id="pageHeading" class="ui huge header center aligned">Rekindle Automations</div>
+            <div id="pageHeading" class="ui huge header center aligned">
+                <img width="100" src="https://res.cloudinary.com/hvarday/image/upload/v1521251828/rekindle/rekindle_Logo.png"/>
+                Rekindle Automations
+            </div>
 
             <br><br>
         </div>
@@ -110,6 +122,11 @@
 
             </div>
         </div>
+        <footer>
+            <img height="70" class="ui left floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251660/rekindle/nsrcel.png"/>
+            <img height="70" class="ui left floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251664/rekindle/dstlogo.png"/>
+            <img height="70" class="ui right floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251661/rekindle/Startindia_logo.png"/>
+        </footer>
 
         <script type="text/javascript">
             angular.module('app', [])
