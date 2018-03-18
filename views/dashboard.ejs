@@ -39,6 +39,7 @@
             }
             .card{
                 text-align: center;
+                height: fit-content;
             }
             .progress{
                 margin: 0 10px!important;
@@ -50,6 +51,21 @@
             }
             body{
                 overflow-y: hidden;
+            }
+            .greenCard{
+                background-color: #21ba45!important;
+                width: 40%!important;
+                margin-left: 10%;
+            }
+            .yellowCard{
+                background-color: #fbbd08!important;
+                width: 40%!important;
+                margin-left: 10%;
+            }
+            .redCard{
+                background-color: #db2828!important;
+                width: 40%!important;
+                margin-left: 10%;
             }
         </style>
     </head>
@@ -94,12 +110,29 @@
                     </div>
                 </div>
             </div>
-            <div ng-class="{'one wide column' : showDevices, 'two wide column' : !showDevices}"></div>
+            <div ng-class="{'one wide column' : showDevices, 'four wide column' : !showDevices}"></div>
             <div ng-class="{'ten wide column' : showDevices, 'twelve wide column' : !showDevices}">
 
 
-            <div class="ui two stackable cards">
-                <div class="centered card">
+            <div class="ui one stackable cards">
+
+                <div class="centered card" style="width:60%!important"
+                    ng-class="{ 'greenCard' : ( device.data.value1 >20 ) ,
+                    'yellowCard' : (device.data.value1 >10 && device.data.value1 <= 20) ,
+                    'redCard' : (device.data.value1 >0 && device.data.value1 <= 10) }"  >
+
+                    <div class="ui huge header cardHeading">Room No.
+                        <small ng-bind="device.data.room || device.data.id"></small>
+                    </div><br><br><br>
+
+                    <div class="ui large header cardHeading" ng-bind=" device.data.value1 + '%' ">
+                    </div>
+
+                    <div class="ui large header cardHeading"><small ng-bind="device.data.value2"></small>
+                    </div><br><br>
+
+                </div>
+                <!-- <div class="centered card">
                     <div class="ui large header cardHeading">Room No.</div><br><br>
                     <h1 ng-bind="device.data.room || device.data.id"></h1>
                 </div>
@@ -117,7 +150,7 @@
                 <div class="centered card">
                     <div class="ui large header cardHeading">Status</div><br>
                     <h1 ng-bind="device.data.value3"></h1>
-                </div>
+                </div> -->
             </div>
 
             </div>
