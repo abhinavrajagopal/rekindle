@@ -7,9 +7,10 @@ router.route("/")
     console.log("QUERY", req.query)
     new dataModel({
         id : req.query.coreid,
-        value1 : req.query.value,
-        value2 : req.query.value1,
-        value3 : req.query.value2,
+        perc : req.query.perc,
+        dropCount : req.query.dropCount,
+        status : req.query.status,
+        botml : req.query.botml,
     }).save()
     .then(()=>res.send("OK"))
     .catch((err)=>{

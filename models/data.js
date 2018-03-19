@@ -4,9 +4,10 @@ var temp = mongoose.Schema({
     id : { type : String, required : true },
     room : { type : String, required : true, default : "100"  },
     created_at : { type : Date, required : true, default : Date.now },
-    value1 : { type : String, required : true, default : "0" },
-    value2 : { type : String, required : true, default : "0" },
-    value3 : { type : String, required : true, default : "0" },
+    perc : { type : Number, required : true, default : 0 },
+    dropCount : { type : String, required : true, default : "0" },
+    botml : { type : Number, required : true, default : 0 },
+    status : { type : String, required : true, default : "G" }
 })
 
 module.exports = mongoose.model('data', temp);

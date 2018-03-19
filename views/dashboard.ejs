@@ -117,18 +117,18 @@
             <div class="ui one stackable cards">
 
                 <div class="centered card" style="width:60%!important"
-                    ng-class="{ 'greenCard' : ( device.data.value1 >20 ) ,
-                    'yellowCard' : (device.data.value1 >10 && device.data.value1 <= 20) ,
-                    'redCard' : (device.data.value1 >0 && device.data.value1 <= 10) }"  >
+                    ng-class="{ 'greenCard' : ( device.data.perc >20 ) ,
+                    'yellowCard' : (device.data.perc >10 && device.data.perc <= 20) ,
+                    'redCard' : (device.data.perc >0 && device.data.perc <= 10) }"  >
 
                     <div class="ui huge header cardHeading">Room No.
                         <small ng-bind="device.data.room || device.data.id"></small>
                     </div><br><br><br>
 
-                    <div class="ui large header cardHeading" ng-bind=" device.data.value1 + '%' ">
+                    <div class="ui large header cardHeading" ng-bind=" device.data.perc + '%' ">
                     </div>
 
-                    <div class="ui large header cardHeading"><small ng-bind="device.data.value2"></small>
+                    <div class="ui large header cardHeading"><small ng-bind="device.data.dropCount + ' drops'"></small>
                     </div><br><br>
 
                 </div>
