@@ -4,6 +4,7 @@ var router = require('express').Router(),
 router.route("/")
 .get((req, res, next)=>{
 
+    console.log("QUERY", req.query)
     new dataModel({
         id : req.query.coreid,
         value1 : req.query.value,
@@ -13,7 +14,7 @@ router.route("/")
     .then(()=>res.send("OK"))
     .catch((err)=>{
         console.log(err);
-        console.log("REQ ", req)
+        console.log("REQ ", req.query)
     });
 
 })
