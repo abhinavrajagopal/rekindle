@@ -7,6 +7,7 @@ router.route("/")
     console.log("QUERY", req.query)
     new dataModel({
         id : req.query.coreid,
+        room : req.query.id,
         perc : req.query.perc,
         dropCount : req.query.dropCount,
         status : req.query.status,

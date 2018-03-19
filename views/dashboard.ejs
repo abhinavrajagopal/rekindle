@@ -36,6 +36,7 @@
             }
             .cardHeading{
                 font-size: 2.5em!important;
+                margin-top: 10px!important;
             }
             .card{
                 text-align: center;
@@ -66,6 +67,14 @@
                 background-color: #db2828!important;
                 width: 40%!important;
                 margin-left: 10%;
+            }
+            .botml{
+                border-radius: 10px!important;
+                right: 0px;
+                width: fit-content;
+                position: absolute;
+                background: white;
+                padding: 0 10px;
             }
         </style>
     </head>
@@ -116,10 +125,15 @@
 
             <div class="ui one stackable cards">
 
+
                 <div class="centered card" style="width:60%!important"
                     ng-class="{ 'greenCard' : ( device.data.perc >20 ) ,
                     'yellowCard' : (device.data.perc >10 && device.data.perc <= 20) ,
                     'redCard' : (device.data.perc >0 && device.data.perc <= 10) }"  >
+
+                    <div class="ui hidden divider"></div>
+
+                    <span class="botml" ng-bind="device.data.botml + ' ml'"></span>
 
                     <div class="ui huge header cardHeading">Room No.
                         <small ng-bind="device.data.room || device.data.id"></small>
