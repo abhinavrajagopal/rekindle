@@ -5,10 +5,15 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css" integrity="sha256-/mC8AIsSmTcTtaf8vgnfbZXZLYhJCd0b9If/M0Y5nDw=" crossorigin="anonymous" />
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js" integrity="sha256-FMQoXFhCWeNb139Wa9Z2I0UjqDeKKDYY+6PLkWv4qco=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
+
     <style media="screen">
         .grid{
             height: 100%;
@@ -80,5 +85,14 @@
         <img height="70" class="ui left floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251664/rekindle/dstlogo.png"/>
         <img height="70" class="ui right floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251661/rekindle/Startindia_logo.png"/>
     </footer>
+
+    <script type="text/javascript">
+        var message = "<%= message %>"
+
+        if(message.length)
+            toastr.error(message, "Login error, try again");
+        console.log(message)
+    </script>
+
 </body>
 </html>

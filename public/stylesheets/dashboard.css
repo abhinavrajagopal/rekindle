@@ -1,0 +1,52 @@
+.card{
+    height : 25vh;
+}
+#deviceData{
+    width: auto!important;
+}
+#pageHeading{
+    font-size: 4em;
+    margin: 5px 0 0 0;
+}
+.cardHeading{
+    font-size: 2.5em!important;
+    margin-top: 10px!important;
+}
+.card{
+    text-align: center;
+    height: fit-content;
+}
+.progress{
+    margin: 0 10px!important;
+}
+footer{
+    position: absolute!important;
+    bottom : 0;
+    width: 100%;
+}
+body{
+    overflow-y: hidden;
+}
+.greenCard{
+    background-color: #21ba45!important;
+    width: 40%!important;
+    margin-left: 10%;
+}
+.yellowCard{
+    background-color: #fbbd08!important;
+    width: 40%!important;
+    margin-left: 10%;
+}
+.redCard{
+    background-color: #db2828!important;
+    width: 40%!important;
+    margin-left: 10%;
+}
+.botml{
+    border-radius: 10px!important;
+    right: 0px;
+    width: fit-content;
+    position: absolute;
+    background: white;
+    padding: 0 10px;
+}

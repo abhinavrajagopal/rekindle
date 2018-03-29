@@ -5,6 +5,7 @@
         <title>Dashboard</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="/stylesheets/dashboard.css">
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -12,7 +13,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js" integrity="sha256-FMQoXFhCWeNb139Wa9Z2I0UjqDeKKDYY+6PLkWv4qco=" crossorigin="anonymous"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" integrity="sha256-zBy1l2WBAh2vPF8rnjFMUXujsfkKjya0Jy5j6yKj0+Q=" crossorigin="anonymous"></script>
+
         <script type="text/javascript">
+
             onload = ()=>{
 
                 $('.ui.accordion').accordion();
@@ -22,61 +25,8 @@
                 $('#deviceList').accordion('open', 0);
 
             }
+
         </script>
-        <style media="screen">
-            .card{
-                height : 25vh;
-            }
-            #deviceData{
-                width: auto!important;
-            }
-            #pageHeading{
-                font-size: 4em;
-                margin: 5px 0 0 0;
-            }
-            .cardHeading{
-                font-size: 2.5em!important;
-                margin-top: 10px!important;
-            }
-            .card{
-                text-align: center;
-                height: fit-content;
-            }
-            .progress{
-                margin: 0 10px!important;
-            }
-            footer{
-                position: absolute!important;
-                bottom : 0;
-                width: 100%;
-            }
-            body{
-                overflow-y: hidden;
-            }
-            .greenCard{
-                background-color: #21ba45!important;
-                width: 40%!important;
-                margin-left: 10%;
-            }
-            .yellowCard{
-                background-color: #fbbd08!important;
-                width: 40%!important;
-                margin-left: 10%;
-            }
-            .redCard{
-                background-color: #db2828!important;
-                width: 40%!important;
-                margin-left: 10%;
-            }
-            .botml{
-                border-radius: 10px!important;
-                right: 0px;
-                width: fit-content;
-                position: absolute;
-                background: white;
-                padding: 0 10px;
-            }
-        </style>
     </head>
     <body ng-controller="dashboardController">
 
@@ -93,6 +43,14 @@
 
         <div class="ui grid">
             <div class="four wide column" ng-show="showDevices">
+
+                <% if(showDevices){ %>
+
+                <a class="ui button yellow" href="/dashboard/accounts">Accounts</a>
+                <div class="ui divider"></div>
+
+                <% } %>
+
                 <div class="ui styled accordion" id="deviceList">
                     <div class="title">
                         <h2><i class="dropdown icon"></i>Device List</h2>
@@ -123,49 +81,30 @@
             <div ng-class="{'ten wide column' : showDevices, 'twelve wide column' : !showDevices}">
 
 
-            <div class="ui one stackable cards">
+                <div class="ui one stackable cards">
 
 
-                <div class="centered card" style="width:60%!important"
-                    ng-class="{ 'greenCard' : ( device.data.perc >20 ) ,
-                    'yellowCard' : (device.data.perc >10 && device.data.perc <= 20) ,
-                    'redCard' : (device.data.perc >0 && device.data.perc <= 10) }"  >
+                    <div class="centered card" style="width:60%!important"
+                        ng-class="{ 'greenCard' : ( device.data.perc >20 ) ,
+                        'yellowCard' : (device.data.perc >10 && device.data.perc <= 20) ,
+                        'redCard' : (device.data.perc >0 && device.data.perc <= 10) }"  >
 
-                    <div class="ui hidden divider"></div>
+                        <div class="ui hidden divider"></div>
 
-                    <span class="botml" ng-bind="device.data.botml + ' ml'"></span>
+                        <span class="botml" ng-bind="device.data.botml + ' ml'"></span>
 
-                    <div class="ui huge header cardHeading">Room No.
-                        <small ng-bind="device.data.room || device.data.id"></small>
-                    </div><br><br><br>
+                        <div class="ui huge header cardHeading">Room No.
+                            <small ng-bind="device.data.room || device.data.id"></small>
+                        </div><br><br><br>
 
-                    <div class="ui large header cardHeading" ng-bind=" device.data.perc + '%' ">
-                    </div>
+                        <div class="ui large header cardHeading" ng-bind=" device.data.perc + '%' ">
+                        </div>
 
-                    <div class="ui large header cardHeading"><small ng-bind="device.data.dropCount + ' drops'"></small>
-                    </div><br><br>
+                        <div class="ui large header cardHeading"><small ng-bind="device.data.dropCount + ' drops'"></small>
+                        </div><br><br>
 
-                </div>
-                <!-- <div class="centered card">
-                    <div class="ui large header cardHeading">Room No.</div><br><br>
-                    <h1 ng-bind="device.data.room || device.data.id"></h1>
-                </div>
-                <div class="centered card">
-                    <div class="ui large header cardHeading">Percentage</div><br><br>
-                    <div class="ui indicating progress" data-percent="{{device.data.value1}}">
-                        <div class="bar"></div>
-                        <div class="label" ng-bind=" device.data.value1 + '%' "></div>
                     </div>
                 </div>
-                <div class="centered card">
-                    <div class="ui large header cardHeading">No. of drops</div><br><br>
-                    <h1 ng-bind="device.data.value2"></h1>
-                </div>
-                <div class="centered card">
-                    <div class="ui large header cardHeading">Status</div><br>
-                    <h1 ng-bind="device.data.value3"></h1>
-                </div> -->
-            </div>
 
             </div>
         </div>

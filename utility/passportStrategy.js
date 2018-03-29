@@ -8,8 +8,6 @@ module.exports = function(passport){
         },
         function(req,username, password, done) {
 
-            console.log(username, password)
-
             userModel.findOne({ username: username }, function (err, user) {
 
                 if (err) { return done(err); }

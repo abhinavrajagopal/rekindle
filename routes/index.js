@@ -23,12 +23,13 @@ router.route('/')
 router.route('/login')
 .get((req, res, next)=>{
 
-    return res.render('login');
+    if(req.user)    return res.redirect('/dashboard');
+
+    return res.render('login', { message : req.flash('failureFlash') });
 
 })
 .post(passport.authenticate('local', { failureRedirect : '/login' }), function(req, res, next){
-    console.log(req.body)
-        res.redirect('/dashboard');
+    res.redirect('/dashboard');
 });
 
 router.route('/admin')

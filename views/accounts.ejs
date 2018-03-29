@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+
+        <link rel="stylesheet" href="/stylesheets/dashboard.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css" integrity="sha256-/mC8AIsSmTcTtaf8vgnfbZXZLYhJCd0b9If/M0Y5nDw=" crossorigin="anonymous" />
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js" integrity="sha256-FMQoXFhCWeNb139Wa9Z2I0UjqDeKKDYY+6PLkWv4qco=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" integrity="sha256-zBy1l2WBAh2vPF8rnjFMUXujsfkKjya0Jy5j6yKj0+Q=" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+
+            onload = ()=>{
+
+                $('.ui.accordion').accordion();
+
+                $('.progress').progress();
+
+                $('#deviceList').accordion('open', 0);
+
+                $('.ui.dropdown').dropdown();
+            }
+
+        </script>
+    </head>
+    <body ng-controller="dashboardController">
+
+        <div class="ui container-fluid" style="margin: 5px 0 0 0;">
+            <a class="ui right floated button red" href="/logout">Logout</a>
+            <a class="ui left floated button green" href="/dashboard">Home</a>
+
+            <div id="pageHeading" class="ui huge header center aligned">
+                <img width="100" src="https://res.cloudinary.com/hvarday/image/upload/v1521251828/rekindle/rekindle_Logo.png"/>
+                Rekindle Automations
+            </div>
+
+            <br><br>
+        </div>
+
+        <div class="ui grid">
+            <div class="four wide column">
+
+                <div class="ui styled accordion" id="deviceList">
+                    <div class="title">
+                        <h2><i class="dropdown icon"></i>Client Accounts</h2>
+                    </div>
+                    <div class="content">
+
+                        <table class="ui celled padded table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Devices</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="client in clients">
+                                    <td ng-bind="client.username"></td>
+                                    <td>
+                                        <a ng-repeat="device in client.devices" class="ui label" ng-bind="device"></a>
+                                    </td>
+                                <tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="one wide column"></div>
+            <div class="six wide column">
+
+                <h2>
+                    Create Account
+                </h2>
+
+                <div class="ui divider"></div>
+                <div class="ui divider hidden"></div>
+                <div class="ui divider hidden"></div>
+
+                <form class="ui form" ng-submit='create()'>
+                    <div class="field">
+                        <label>Credentials</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <input type="text" ng-model="user.name" placeholder="Username" required>
+                            </div>
+                            <div class="field">
+                                <input type="text" ng-model="user.password" placeholder="Password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Assign Devices:</label>
+                        <div class="ui fluid multiple search selection dropdown">
+                            <input type="hidden">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Assigned Devices</div>
+                            <div class="menu">
+                                <div ng-repeat="device in devices" class="item" data-value="{{device}}" data-text="{{device}}">{{device}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui divider hidden"></div>
+                    <div class="ui divider"></div>
+                    <div class="ui divider hidden"></div>
+
+                    <input type="submit" class="ui button green" value="Create"/>
+
+                </form>
+
+            </div>
+        </div>
+        <footer>
+            <img height="70" class="ui left floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251660/rekindle/nsrcel.png"/>
+            <img height="70" class="ui left floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251664/rekindle/dstlogo.png"/>
+            <img height="70" class="ui right floated image" src="https://res.cloudinary.com/hvarday/image/upload/v1521251661/rekindle/Startindia_logo.png"/>
+        </footer>
+
+        <script type="text/javascript">
+            angular.module('app', [])
+            .controller('dashboardController', ["$scope", "$http", "$interval", ($scope, $http, $interval)=>{
+
+                function errorHandler(resp){
+                    if(resp.data.custom)
+                        return toastr.error(resp.data.error);
+                    toastr.error("Something went wrong", "Try checking your internet connection")
+                }
+
+                $scope.init = function(){
+
+                    $scope.deviceList = [];
+                    $scope.clients = [];
+                    $scope.user = {
+                        name : "",
+                        password : "",
+                        devices : []
+                    }
+
+                    $scope.fetchDevices();
+
+                    $scope.fetchClients();
+
+                }
+
+                $scope.fetchDevices = ()=>{
+                    $http.post('/dashboard')
+                    .then((resp)=>{
+                        $scope.devices = resp.data;
+
+                        $('.search.dropdown').dropdown("clear")
+                        $('.search.dropdown').dropdown({
+                        	onChange : function(a, b, c){
+                                $scope.user.devices = a.split(',');
+                            }
+                        });
+
+                    })
+                    .catch(errorHandler)
+                }
+
+                $scope.fetchClients = function(){
+                    $http.post('/dashboard/accounts')
+                    .then((resp)=>{
+                        $scope.clients = resp.data;
+                    })
+                    .catch(errorHandler)
+                }
+
+                $scope.init();
+
+
+                $scope.create = ()=>{
+                    console.log($scope.user);
+
+                    if(!$scope.user.devices.length)
+                        return toastr.error("No device selected", "Please select a device and try again")
+
+                    var payload = {
+                        username : $scope.user.name,
+                        password : $scope.user.password,
+                        devices : $scope.user.devices
+                    }
+
+                    $http.put('/dashboard/accounts', payload)
+                    .then((resp)=>{
+                        toastr.success("Account successfully created", "Username - " + payload.username)
+                        $scope.init();
+                    })
+                    .catch(errorHandler)
+                }
+
+            }])
+
+        </script>
+    </body>
+</html>
